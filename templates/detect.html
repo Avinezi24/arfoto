@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Deteksi QR Code</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Deteksi Pesan dari QR Code</h1>
+        </div>
+        <form id="uploadForm" method="POST" enctype="multipart/form-data">
+            <!-- Input untuk memilih dari file manager -->
+            <label for="fileInput">Unggah dari File:</label>
+            <input type="file" name="image" id="fileInput" accept="image/*">
+
+            <!-- Tombol untuk membuka kamera -->
+            <button type="button" onclick="openCamera()">Buka Kamera</button>
+
+            <!-- Tempat untuk menampilkan kamera -->
+            <video id="video" width="300" height="225" autoplay style="display: none;"></video>
+            <canvas id="canvas" width="300" height="225" style="display: none;"></canvas>
+
+            <!-- Tombol untuk mengambil gambar dari kamera -->
+            <button type="button" id="captureButton" onclick="captureImage()" style="display: none;">Ambil Foto</button>
+
+            <button type="submit">Unggah untuk Deteksi QR</button>
+        </form>
+
+        {% if message %}
+            <h2>Pesan dari QR Code: {{ message }}</h2>
+            <img src="{{ url_for('static', filename='uploads/' + image_file) }}" width="200">
+        {% endif %}
+        
+        <a href="{{ url_for('index') }}">Kembali ke Beranda</a>
+    </div>
+
+    <script>
+        function openCamera() {
+            const video = document.getElementById('video');
+            const captureButton = document.getElementById('captureButton');
+            video.style.display = 'block';
+            captureButton.style.display = 'block';
+
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    video.srcObject = stream;
+                })
+                .catch(err => {
+                    console.error("Error accessing camera: ", err);
+                });
+        }
+
+        function captureImage() {
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+            canvas.style.display = 'block';
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            canvas.toBlob(blob => {
+                const fileInput = document.getElementById('fileInput');
+                const file = new File([blob], "captured_image.png", { type: "image/png" });
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                fileInput.files = dataTransfer.files;
+
+                document.getElementById('uploadForm').submit();
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+
+<style>
+    * {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+
+    .btn {
+        width: 100px;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    body {
+        width: 100%;
+        height: 100vh;
+    }
+
+    .container,
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+    .container {
+        height: 100%;
+        justify-content: flex-start;
+    }
+
+    form {
+        gap: 10px;
+        padding-bottom: 30px;
+        margin-top: 50px;
+    }
+
+    input, button {
+        width: 300px;
+        padding: 10px;
+    }
+
+    .messg {
+        height: 30vh;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+        margin-top: 60%;
+        margin-right: 60%;
+        background-color: rgb(170, 170, 170);
+        padding: 10px;
+        border-radius: 20px;
+    }
+</style>

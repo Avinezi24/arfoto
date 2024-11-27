@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head><title>Beranda</title></head>
+<body>
+    <div class="container">
+        <h1>Gambar yang Diunggah</h1>
+    <div class="gambar">
+        {% for image in images %}
+            <img src="{{ url_for('static', filename='uploads/' + image) }}" width="200">
+        {% endfor %}
+    </div>
+    <div class="menu">
+        <a href="{{ url_for('upload') }}">Unggah Gambar</a> | <a href="{{ url_for('detect') }}">Deteksi QR</a>
+    </div>
+    </div>
+</body>
+</html>
+
+<style>
+    * {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+
+    .btn {
+        width: 100px;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    body {
+        width: 100%;
+        height: 100vh;
+    }
+
+    .container,
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+    .container {
+        height: 100%;
+        justify-content: flex-start;
+    }
+
+    form {
+        gap: 10px;
+        padding-bottom: 30px;
+        margin-top: 50px;
+    }
+
+    input, button {
+        width: 300px;
+        padding: 10px;
+    }
+
+    .messg {
+        height: 30vh;
+    }
+
+    .menu{
+        display: flex;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+        margin-top: 20%;
+        margin-bottom: 20%;
+        margin-right: 20%;
+        background-color: rgb(170, 170, 170);
+        
+        border-radius: 20px;
+        padding: 50px;
+
+    }
+    img{
+        border: 2px black solid;
+        min-height: 150px;
+        max-height: 200px;
+
+        min-width: 300px;
+        max-width: 300px;
+        
+    }
+    .gambar{
+        display: flex;flex-direction: column;justify-content: center; align-items: center; gap: 10px;
+    }
+</style>

@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>upload gambar</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Upload Gambar</h1>
+        </div>
+        
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" required>
+        <input class="messg" type="text" name="message" placeholder="Masukkan pesan untuk QR" required>
+        <button class="btn" type="submit">Unggah</button>
+    </form>
+    <a href="{{ url_for('index') }}">Kembali ke Beranda</a>
+    </div>
+</body>
+</html>
+
+<style>
+    *{
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+    .btn{
+        width: 100px;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    body{
+        width: 100%;
+        height: 100vh;
+    }
+    .container, form{
+        display: flex; flex-direction: column; justify-content: center; align-items: center;
+    }
+    .container{
+        height: 100%;
+        justify-content: flex-start;
+    }
+    form{
+        gap: 10px;
+    }
+    input{
+        width: 300px;
+        padding: 10px;
+    }
+    .messg{
+        height: 30vh;
+    }
+
+    a{
+        text-decoration: none;
+        color: black;
+        margin-top: 40%;
+        margin-right: 60%;
+        background-color: rgb(170, 170, 170);
+        padding: 10px;
+        border-radius: 20px;
+    }
+</style>
